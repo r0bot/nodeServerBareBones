@@ -1,0 +1,31 @@
+{
+  "name": "nodeServerBareBones",
+  "author": "twistedSynapse",
+  "repository": "https://github.com/twistedSynapse/nodeServerBareBones",
+  "version": "0.0.1",
+  "main": "server.js",
+  "license": "Apache 2.0",
+  "scripts": {
+    "start": "node server.js",
+    "postinstall": "bower install --config.interactive=false;"
+  },
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "bluebird": "^3.1.1",
+    "body-parser": "^1.14.2",
+    "bower": "^1.7.1",
+    "cookie-parser": "^1.4.0",
+    "express": "^4.13.3",
+    "express-session": "^1.12.1",
+    "glob": "^6.0.2",
+    "lodash": "^3.10.1",
+    "mongoose": "^4.3.4",
+    "morgan": "^1.6.1",
+    "node-uuid": "^1.4.7",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "serve-favicon": "^2.3.0",
+    "swig": "^1.4.2"
+  },
+  "devDependencies": {}
+}
