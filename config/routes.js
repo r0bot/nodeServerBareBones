@@ -8,9 +8,10 @@ module.exports = function (app) {
     //Get authentication controller and plug isLoggedIn function as a middleware for routes that require authentication
     var authController = require('./../server/controllers/Authentication/AuthenticationController')(passport);
 
-    //Get route deinitions
+    //Get route definitions
     var routes = require('./../server/routes');
     var auth = require('./../server/routes/auth')(passport);
+    var users = require('./../server/routes/api/users')(dataRepositories);
 
     //Basic app routes
     app.use('/', routes);
@@ -18,6 +19,7 @@ module.exports = function (app) {
 
     //Middleware to check if user is authenticated
     app.use('/api/*', authController.isAuthenticated);
+    app.use('/api/users', users);
 
     //Middleware to check if user is admin
     app.use('/api/admin/*', authController.isAdmin);

@@ -8,7 +8,10 @@
                 <a ui-sref="login">Login</a>
             </li>
             <li class="pull-right" ui-sref-active="active" ng-show="headerCtrl.isUserLoggedin">
-                <a ng-click="headerCtrl.signOut()">Sign out</a>
+                <a ng-click="headerCtrl.logout()">Sign out</a>
+            </li>
+            <li class="pull-right" ui-sref-active="active" ng-show="headerCtrl.isUserLoggedin">
+                <a ui-sref="profile">Profile</a>
             </li>
             <li class="pull-right" ui-sref-active="active" ng-show="headerCtrl.isUserAdmin">
                 <a ui-sref="dashboard">Dashboard</a>

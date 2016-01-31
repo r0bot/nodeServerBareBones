@@ -2,5 +2,5 @@
 
 angular.module('users')
     .config([function () {
-        // Users module configurations here...
+        // Add users module configurations here...
     }]);

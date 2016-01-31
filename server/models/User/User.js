@@ -40,9 +40,45 @@ var UserSchema = new Schema({
 			type: String,
 			enum: ['user', 'admin']
 		}],
-		default: ['user','admin']
+		default: ['user']
+	},
+	phoneNumber: {
+		type: String,
+		trim: true,
+		default: ''
+	},
+	city: {
+		type: String,
+		trim: true,
+		default: ''
+	},
+	country: {
+		type: String,
+		trim: true,
+		default: ''
+	},
+	postalCode: {
+		type: Number
+	},
+	address: {
+		type: String,
+		trim: true,
+		default: ''
+	},
+	gender: {
+		type: [{
+			type: String,
+			enum: ['male', 'female']
+		}],
+		trim: true,
+		default: 'male'
+	},
+	provider: {
+		type: String,
+		required: 'Provider is required'
 	},
 	providerData: {},
+	additionalProvidersData: {},
 	updated: {
 		type: Date
 	},

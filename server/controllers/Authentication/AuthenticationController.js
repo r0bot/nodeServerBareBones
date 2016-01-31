@@ -1,7 +1,8 @@
 'use strict';
 
 var dataRepositories = require('./../../dataRepositories'),
-    bluebird = require('bluebird');
+    bluebird = require('bluebird'),
+    userUtils = require('./../../utilities/userUtilities.js');
 
 var AuthenticationController = function (passport) {
 
@@ -47,6 +48,43 @@ var AuthenticationController = function (passport) {
         }
     }
 
+    // Local login
+    function login (req, res, next) {
+        passport.authenticate('local-login', function (error, user, info) {
+            if (error) {
+                res.status(403).send(error);
+                return;
+            }
+
+            req.logIn(user, function (error) {
+                if (error) {
+                    res.status(403).send(error);
+                    return;
+                }
+
+                res.json({
+                    user: userUtils.getPublicUser(user),
+                    info: info
+                });
+            });
+
+        })(req, res, next);
+    }
+
+    //Local-signup
+    function signup (req, res, next) {
+        passport.authenticate('local-signup', function (error, user, info) {
+            if (error) {
+                res.status(403).send(error);
+                return;
+            }
+
+            res.json({
+                user: userUtils.getPublicUser(user),
+                info: info
+            });
+        })(req, res, next);
+    }
 
     // OAuth callback
     function oauthCallback (strategy) {
@@ -83,6 +121,8 @@ var AuthenticationController = function (passport) {
         isAuthenticated: isAuthenticated,
         isAdmin: isAdmin,
         logout: logout,
+        login: login,
+        signup: signup,
         oauthCallback: oauthCallback,
         saveOAuthUserProfile: saveOAuthUserProfile
     }

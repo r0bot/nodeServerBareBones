@@ -1,3 +1,7 @@
+'use strict';
+
+var userUtils = require('./../../utilities/userUtilities.js');
+
 module.exports = function (dataRepositories) {
 
     function getAll (req, res) {
@@ -18,7 +22,7 @@ module.exports = function (dataRepositories) {
 
         dataRepositoriesRepositories.users.getById(id)
             .then(function (user) {
-                res.json(getPublicUser(user));
+                res.json(userUtils.getPublicUser(user));
             }, function (error) {
                 res.render('error', {
                     error: error,
@@ -30,7 +34,7 @@ module.exports = function (dataRepositories) {
     function create (req, res) {
         dataRepositories.users.create(req.body)
             .then(function (createdUser) {
-                res.json(getPublicUser(createdUser));
+                res.json(userUtils.getPublicUser(createdUser));
             }, function (error) {
                 res.render('error', {
                     message: 'Cannot create user!',
@@ -45,7 +49,7 @@ module.exports = function (dataRepositories) {
 
         dataRepositories.users.updateById(id, updatesObject)
             .then(function (updatedUser) {
-                res.json(getPublicUser(updatedUser));
+                res.json(userUtils.getPublicUser(updatedUser));
             }, function (error) {
                 res.render('error', {
                     error: error,
@@ -53,7 +57,6 @@ module.exports = function (dataRepositories) {
                 });
             });
     }
-
 
     return {
         getAll: getAll,

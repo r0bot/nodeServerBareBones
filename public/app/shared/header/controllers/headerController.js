@@ -1,25 +1,24 @@
 'use strict';
 
 angular.module('header')
-    .controller('HeaderController', ['$scope','$state','AuthService',
-        function HeaderController ($scope, $state, AuthService) {
+    .controller('HeaderController', ['$scope','$state', 'Authentication', 'Identity',
+        function HeaderController ($scope, $state, Authentication, Identity) {
             var self = this;
             self.brand = "nodeBareBones";
 
-            //Init the user if available
-            AuthService.getUser();
-
-            //watch the user in authService for changes, so it can show hide links
-            $scope.$watch(function(){ return AuthService.user},
-                function(user) {
-                    self.isUserLoggedin = (user.displayName)?true:false;
-                    self.isUserAdmin = (user.roles && user.roles.indexOf('admin'))?true:false;
+            //watch the user in identity for changes, so it can show hide links
+            $scope.$watch(function(){ return Identity.currentUser},
+                function(currentUser) {
+                    if(currentUser){
+                        self.isUserLoggedin = (currentUser.displayName)?true:false;
+                        self.isUserAdmin = (currentUser.roles && currentUser.roles.indexOf('admin'))?true:false;
+                    }
                 }
             );
 
             //Call function to signout the user
-            self.signOut = function () {
-                AuthService.signOut();
+            self.logout = function () {
+                Authentication.logout();
             }
         }
     ]);
