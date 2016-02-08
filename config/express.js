@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 var path = require('path');
 var fs = require('fs');
@@ -9,8 +11,9 @@ var swig = require('swig');
 var morgan = require('morgan');
 var config = require('./config');
 var passport = require('passport');
+var _ = require('lodash');
 
-module.exports = function () {
+module.exports = function (sessionStore) {
     //Init app variable
     var app = express();
     app.locals.cssFiles = config.getCSSAssets();
@@ -42,8 +45,8 @@ module.exports = function () {
     app.use(bodyParser.urlencoded({extended: true}));
     app.use(cookieParser());
 
-    // Configure session management
-    app.use(session(config.session));
+    // Configure session management. Extend the options with store. If not provided (null/undefined) express will fallback to default MemStore.
+    app.use(session(_.assign(config.session, {store: sessionStore})));
 
     // Initialize passport
     app.use(passport.initialize());
