@@ -3,7 +3,7 @@
 var passport = require('passport');
 var express = require('express');
 var router = express.Router();
-
+//TODO authentication controller should operate on error result to callback basis. remove routing logic from there and create function here to handle that.
 module.exports = function (passport) {
     var AuthenticationController = require('./../../controllers/Authentication/AuthenticationController')(passport);
 

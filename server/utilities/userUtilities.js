@@ -1,6 +1,7 @@
 module.exports = function () {
 
     function getPublicUser(user) {
+        //TODO add validation for missing user properties. Mark mandatory ones and add default values to the others.
         return {
             id: user._id,
             username: user.username,
@@ -17,7 +18,21 @@ module.exports = function () {
         };
     }
 
+    /**
+     *
+     * @param userModel
+     * @returns {Error|error.BaseError}
+     */
+    function validateUserPasswordByModel(userModel, done){
+        if(typeof userModel.validPassword === 'function'){
+            done(null, userModel.validPassword(userModel.password));
+            return;
+        }
+        done(new Error('User model is missing validPassword method.'));
+    }
+
     return {
+        validateUserPasswordByModel: validateUserPasswordByModel,
         getPublicUser: getPublicUser
     }
 }();

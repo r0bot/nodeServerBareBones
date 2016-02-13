@@ -45,6 +45,13 @@ module.exports = {
         resave: true,
         saveUninitialized: true
     },
+    controllersConfig : {
+        users: {
+            dataRepository: {
+                name: 'mongoDb'
+            }
+        }
+    },
     socketIO: {
         port: 3020
     },

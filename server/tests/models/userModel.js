@@ -1,7 +1,7 @@
 'use strict';
 
 var should = require('should'),
-    User = require('./../../models/User/User');
+    User = require('./.././User/User');
 
 var CorrectUser, wrongUser;
 

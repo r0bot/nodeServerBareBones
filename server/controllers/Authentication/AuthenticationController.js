@@ -1,7 +1,6 @@
 'use strict';
-
-var dataRepositories = require('./../../dataRepositories'),
-    bluebird = require('bluebird'),
+//TODO this controller should return error and result to a callback in all its functions. Routing related manipulations should happen in route handler functions and not here.
+var bluebird = require('bluebird'),
     userUtils = require('./../../utilities/userUtilities.js');
 
 var AuthenticationController = function (passport) {
@@ -61,7 +60,7 @@ var AuthenticationController = function (passport) {
                     res.status(403).send(error);
                     return;
                 }
-
+                //TODO this is not supposed to return raw user data getPublicUser should happen somewhere deeper
                 res.json({
                     user: userUtils.getPublicUser(user),
                     info: info
@@ -78,7 +77,7 @@ var AuthenticationController = function (passport) {
                 res.status(403).send(error);
                 return;
             }
-
+            //TODO this is not supposed to return raw user data getPublicUser should happen somewhere deeper
             res.json({
                 user: userUtils.getPublicUser(user),
                 info: info
@@ -106,14 +105,7 @@ var AuthenticationController = function (passport) {
     }
 
     function saveOAuthUserProfile (req, providerData) {
-        var deferred = bluebird.defer();
-
-        dataRepositories.users.createUser(providerData).then(function (createdUser) {
-            deferred.resolve(createdUser);
-        }, function (error) {
-            deferred.reject(error);
-        });
-        return deferred.promise;
+      //
     }
 
     return {

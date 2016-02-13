@@ -2,7 +2,7 @@
 
 var should = require('should'),
     config = require('./../../../config/config'),
-    Status = require('./../../models/Status/Status');
+    Status = require('./.././Status/Status');
 
 var CorrectStatus, wrongStatus;
 

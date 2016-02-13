@@ -28,3 +28,9 @@ node_modules
 
 # Ignore WebStorm files and folders
 .idea
+
+#Ignore everything in storage folder as this is supposed to be instance related data
+storage/
+
+#Ignore development config
+config/environments/development.js

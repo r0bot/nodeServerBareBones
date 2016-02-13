@@ -2,7 +2,7 @@
 
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var User = require('./../../server/models/User/User');
+var usersController = require('./../../server/controllers/Users/UsersController')();
 
 module.exports = function () {
     passport.use('local-signup', new LocalStrategy({
@@ -14,7 +14,7 @@ module.exports = function () {
         console.log('Registering user: ', userData);
 
         process.nextTick(function () {
-            User.findOne({'username': username}, function (error, user) {
+            usersController.find({'username': username},{singleResult: true}, function (error, user) {
                 if (error) {
                     return done(error);
                 }
@@ -22,33 +22,14 @@ module.exports = function () {
                 if (user) {
                     return done(null, false, { message: 'Username already exist!' });
                 } else {
+                    userData.username = username;
+                    userData.provider = 'local';
 
-                    var newUser = new User({
-                        username: username,
-                        provider: 'local',
-                        email: userData.email,
-                        phoneNumber: userData.phoneNumber,
-                        firstName: userData.firstName,
-                        lastName: userData.lastName,
-                        displayName: userData.firstName + ' ' + userData.lastName,
-                        city: userData.city,
-                        country: userData.country,
-                        postalCode: userData.postalCode,
-                        address: userData.address
-                    });
-
-                    newUser.password = newUser.generateHash(password);
-
-                    if (userData.roles) {
-                        newUser.roles = userData.roles;
-                    }
-
-                    newUser.save(function (error) {
+                    usersController.createUser(userData, function(error, createdUser){
                         if (error) {
                             throw error;
                         }
-
-                        return done(null, newUser, { message: 'Sign up succeeded!' });
+                        return done(null, createdUser, { message: 'Sign up succeeded!' });
                     });
                 }
             });
@@ -60,20 +41,16 @@ module.exports = function () {
         passwordField: 'password',
         passReqToCallback: true
     }, function (req, username, password, done) {
-        User.findOne({'username': username}, function (error, user) {
+        usersController.validateUserPassword({'username': username,'password':password}, function (error, result) {
             if (error) {
                 return done({message: error.message });
             }
 
-            if (!user) {
-                return done({ message: 'No user found!' });
+            if(result.isPasswordValid){
+                return done({message: 'Invalid password!' });
             }
 
-            if (!user.validPassword(password)) {
-                return done({ message: 'Wrong password!' });
-            }
-
-            return done(false, user, { message: 'Login succeeded!' });
+            return done(false, result.user, { message: 'Login succeeded!' });
         });
     }));
 };
