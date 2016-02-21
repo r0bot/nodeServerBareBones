@@ -1,3 +1,5 @@
+/*jslint node: true todo: true nomen: true*/
+'use strict';
 /**
  * This is helpful if you want to require('/server/models') all at a time and use them together for some reason. 
  * 

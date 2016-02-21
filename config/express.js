@@ -1,3 +1,4 @@
+/*jslint node: true todo: true nomen: true*/
 'use strict';
 
 var express = require('express');
@@ -63,8 +64,7 @@ module.exports = function (sessionStore) {
 
     if (process.env.NODE_ENV === 'development') {
         app.use(morgan('dev'));
-    }
-    else {
+    } else {
         app.use(morgan('combined', {
             stream: accessLogStream
         }));
@@ -77,10 +77,9 @@ module.exports = function (sessionStore) {
         res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
         res.header('Access-Control-Allow-Headers', 'X-Custom-Header, Content-Type, Authorization, Content-Length, X-Requested-With');
 
-        if ('OPTIONS' == req.method) {
+        if ('OPTIONS' === req.method) {
             res.send(200);
-        }
-        else {
+        } else {
             next();
         }
     });

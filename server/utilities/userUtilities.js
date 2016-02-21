@@ -1,3 +1,6 @@
+/*jslint node: true todo: true nomen: true*/
+'use strict';
+
 module.exports = function () {
 
     function getPublicUser(user) {
@@ -19,12 +22,11 @@ module.exports = function () {
     }
 
     /**
-     *
      * @param userModel
-     * @returns {Error|error.BaseError}
+     * @param done  {Error|error.BaseError}
      */
-    function validateUserPasswordByModel(userModel, done){
-        if(typeof userModel.validPassword === 'function'){
+    function validateUserPasswordByModel(userModel, done) {
+        if (typeof userModel.validPassword === 'function') {
             done(null, userModel.validPassword(userModel.password));
             return;
         }
@@ -34,5 +36,5 @@ module.exports = function () {
     return {
         validateUserPasswordByModel: validateUserPasswordByModel,
         getPublicUser: getPublicUser
-    }
-}();
+    };
+};
