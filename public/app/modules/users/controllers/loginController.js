@@ -1,8 +1,9 @@
-'use strict';
+/*global angular */
 
 angular.module('users')
     .controller('LoginController', ['$scope', '$state', 'Authentication', 'Identity',
-        function LoginController ($scope, $state, Authentication, Identity) {
+        function LoginController($scope, $state, Authentication, Identity) {
+            'use strict';
             var self = this;
 
             self.identity = Identity;
@@ -14,8 +15,8 @@ angular.module('users')
                     .then(function () {
                         $state.go('home');
                     }, function (error) {
-                        if (error == 'No user found!') {
-                           self.loginError = 'Wrong username or password';
+                        if (error === 'No user found!') {
+                            self.loginError = 'Wrong username or password';
                         }
                     });
             };
@@ -26,10 +27,10 @@ angular.module('users')
                 if (!fieldName) {
                     return false;
                 }
-                else if (self.user[fieldName]) {
+
+                if (self.user[fieldName]) {
                     field = self.user[fieldName];
-                }
-                else {
+                } else {
                     field = $scope.loginForm[fieldName].$viewValue;
                 }
 

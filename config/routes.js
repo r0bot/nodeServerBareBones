@@ -1,14 +1,14 @@
-var passport = require('passport');
+/*jslint node: true todo: true nomen: true*/
+'use strict';
 
 module.exports = function (app) {
 
     //Get authentication controller and plug isLoggedIn function as a middleware for routes that require authentication
-    var authController = require('./../server/controllers/Authentication/AuthenticationController')(passport);
-
-    //Get route definitions
-    var routes = require('./../server/routes');
-    var auth = require('./../server/routes/auth')(passport);
-    var users = require('./../server/routes/api/users')();
+    var authController = require('./../server/controllers/Authentication/AuthenticationController')(),
+        //Get route definitions
+        routes = require('./../server/routes'),
+        auth = require('./../server/routes/auth')(),
+        users = require('./../server/routes/api/users')();
 
     //Basic app routes
     app.use('/', routes);
@@ -23,6 +23,7 @@ module.exports = function (app) {
 
     // Catch 404 and forward to error handler
     app.use(function (req, res, next) {
+        /*jslint unparam: true*/
         var err = new Error('Not Found');
         err.status = 404;
         next(err);

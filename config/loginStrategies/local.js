@@ -1,3 +1,4 @@
+/*jslint node: true todo: true nomen: true*/
 'use strict';
 
 var passport = require('passport');
@@ -14,24 +15,25 @@ module.exports = function () {
         console.log('Registering user: ', userData);
 
         process.nextTick(function () {
-            usersController.find({'username': username},{singleResult: true}, function (error, user) {
+            usersController.find({'username': username}, {singleResult: true}, function (error, user) {
                 if (error) {
                     return done(error);
                 }
 
                 if (user) {
-                    return done(null, false, { message: 'Username already exist!' });
-                } else {
-                    userData.username = username;
-                    userData.provider = 'local';
-
-                    usersController.createUser(userData, function(error, createdUser){
-                        if (error) {
-                            throw error;
-                        }
-                        return done(null, createdUser, { message: 'Sign up succeeded!' });
-                    });
+                    return done(null, false, {message: 'Username already exist!'});
                 }
+
+                userData.username = username;
+                userData.provider = 'local';
+
+                usersController.createUser(userData, function (error, createdUser) {
+                    if (error) {
+                        throw error;
+                    }
+                    return done(null, createdUser, {message: 'Sign up succeeded!'});
+                });
+
             });
         });
     }));
@@ -41,16 +43,17 @@ module.exports = function () {
         passwordField: 'password',
         passReqToCallback: true
     }, function (req, username, password, done) {
-        usersController.validateUserPassword({'username': username,'password':password}, function (error, result) {
+        /*jslint unparam: true*/
+        usersController.validateUserPassword({'username': username, 'password': password}, function (error, result) {
             if (error) {
-                return done({message: error.message });
+                return done({message: error.message});
             }
 
-            if(result.isPasswordValid){
-                return done({message: 'Invalid password!' });
+            if (result.isPasswordValid) {
+                return done({message: 'Invalid password!'});
             }
 
-            return done(false, result.user, { message: 'Login succeeded!' });
+            return done(false, result.user, {message: 'Login succeeded!'});
         });
     }));
 };

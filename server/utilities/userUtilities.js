@@ -1,7 +1,7 @@
 /*jslint node: true todo: true nomen: true*/
 'use strict';
 
-module.exports = function () {
+module.exports = (function () {
 
     function getPublicUser(user) {
         //TODO add validation for missing user properties. Mark mandatory ones and add default values to the others.
@@ -37,4 +37,4 @@ module.exports = function () {
         validateUserPasswordByModel: validateUserPasswordByModel,
         getPublicUser: getPublicUser
     };
-};
+}());
