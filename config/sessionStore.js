@@ -1,3 +1,5 @@
+/*jslint node: true todo: true nomen: true*/
+/*globals */
 'use strict';
 
 var config = require('./config');
@@ -12,10 +14,12 @@ module.exports = function () {
     var sequelize = new Sequelize(
         config.sessionStore.database,
         config.sessionStore.username,
-        config.sessionStore.password, {
+        config.sessionStore.password,
+        {
             "dialect": "sqlite",
             "storage": config.sessionStore.storagePath
-        });
+        }
+    );
 
     var sessionStore = new SequelizeStore({
         db: sequelize

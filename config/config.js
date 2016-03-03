@@ -1,3 +1,6 @@
+/*jslint node: true todo: true nomen: true*/
+'use strict';
+
 var _ = require('lodash'),
     glob = require('glob');
 
@@ -9,42 +12,16 @@ var config = _.extend(require('./environments/' + environment));
 
 //Define the assets that will be loaded in the swig layout template.
 var ASSETS = {
-    lib: {
-        css: [
-            'public/assets/css/bootstrap.min.css',
-            'public/assets/css/style.css',
-            'public/assets/css/material.min.css'
-        ],
-        js: [
-            'public/assets/bower_components/angular/angular.js',
-            'public/assets/bower_components/angular-bootstrap/ui-bootstrap.js',
-            'public/assets/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
-            'public/assets/bower_components/angular-route/angular-route.js',
-            'public/assets/bower_components/angular-resource/angular-resource.js',
-            'public/assets/bower_components/angular-cookies/angular-cookies.js',
-            'public/assets/bower_components/angular-animate/angular-animate.js',
-            'public/assets/bower_components/angular-ui-utils/validate.js',
-            'public/assets/bower_components/angular-ui-router/release/angular-ui-router.js',
-            'public/assets/bower_components/ng-file-upload/angular-file-upload.js',
-            'public/assets/bower_components/ng-file-upload/angular-file-upload-shim.js'
-        ]
-    },
     css: [
-        'public/app/modules/*/css/*.css',
-        'public/app/shared/*/css/*.css'
+        'public/assets/css/*.css'
     ],
     js: [
-        'public/config.js',
-        'public/application.js',
-        'public/app/modules/*/*.js',
-        'public/app/modules/*/*[!tests]*/*.js',
-        'public/app/shared/*/*.js',
-        'public/app/shared/*/*[!tests]*/*.js'
+        'public/dist/bundle.js'
     ],
     tests: [
         //'/assets/bower_components/angular-mocks/angular-mocks.js',
         'public/app/modules/*/tests/*.js',
-        'public/app/shared/*/tests/*.js'
+        'public/app/core/*/tests/*.js'
     ]
 };
 
@@ -52,23 +29,23 @@ config.environment = environment;
 
 config.getGlobbedFiles = function (globPatterns, removeRoot) {
     // URL paths regex
-    var urlRegex = new RegExp('^(?:[a-z]+:)?\/\/', 'i');
-
+    var urlRegex = new RegExp('^(?:[a-z]+:)?\/\/', 'i'),
     // The output array
-    var output = [];
+        output = [],
+        files = null;
 
     // If glob pattern is array so we use each pattern in a recursive way, otherwise we use glob
     if (_.isArray(globPatterns)) {
-        globPatterns.forEach(function(globPattern) {
+        globPatterns.forEach(function (globPattern) {
             output = _.union(output, config.getGlobbedFiles(globPattern, removeRoot));
         });
     } else if (_.isString(globPatterns)) {
         if (urlRegex.test(globPatterns)) {
             output.push(globPatterns);
         } else {
-           var files =  glob.sync(globPatterns);
+            files = glob.sync(globPatterns);
             if (removeRoot) {
-                files = files.map(function(file) {
+                files = files.map(function (file) {
                     return file.replace(removeRoot, '');
                 });
             }
@@ -80,7 +57,7 @@ config.getGlobbedFiles = function (globPatterns, removeRoot) {
 };
 
 config.getJavaScriptAssets = function (includeTests) {
-    var output = config.getGlobbedFiles(ASSETS.lib.js.concat(ASSETS.js), 'public/');
+    var output = config.getGlobbedFiles(ASSETS.js, 'public/');
 
     // To include tests
     if (includeTests) {
@@ -91,7 +68,7 @@ config.getJavaScriptAssets = function (includeTests) {
 };
 
 config.getCSSAssets = function () {
-    var output = config.getGlobbedFiles(ASSETS.lib.css.concat(ASSETS.css), 'public/');
+    var output = config.getGlobbedFiles(ASSETS.css, 'public/');
     return output;
 };
 

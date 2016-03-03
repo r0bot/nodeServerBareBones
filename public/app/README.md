@@ -1,1 +1,0 @@
-# AngularJS application folder

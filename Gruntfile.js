@@ -1,58 +1,64 @@
+/*jslint node: true todo: true nomen: true*/
+/*globals */
 'use strict';
 
 module.exports = function (grunt) {
-    grunt.loadNpmTasks('grunt-mocha-test');
-    grunt.loadNpmTasks('grunt-nodemon');
-    grunt.loadNpmTasks('grunt-env');
-    grunt.loadNpmTasks('grunt-shell');
-    grunt.loadNpmTasks('grunt-retire');
-
+    require("matchdep").filterAll("grunt-*").forEach(grunt.loadNpmTasks);
+    var webpack = require("webpack"),
+        webpackConfig = require("./webpack.config.js");
     grunt.initConfig({
-        pkg: grunt.file.readJSON('package.json'),
-        mochaTest: {
-            src: ['server/tests/**/*.js'],
-            options: {
-                reporter: 'spec',
-                require: 'server.js'
+        webpack: {
+            options: webpackConfig,
+            build: {
+                plugins: webpackConfig.plugins.concat(
+                    new webpack.DefinePlugin({
+                        "process.env": {
+                            // This has effect on the react lib size
+                            "NODE_ENV": JSON.stringify("development")
+                        }
+                    }),
+                    new webpack.optimize.DedupePlugin(),
+                    new webpack.optimize.UglifyJsPlugin()
+                )
+            },
+            "build-dev": {
+                devtool: "sourcemap",
+                debug: true
             }
         },
-        nodemon: {
-            dev: {
-                script: 'server.js',
-                options: {
-                    ignore: [
-                        'node_modules/**',
-                        'public/**'
-                    ]
+        "webpack-dev-server": {
+            options: {
+                webpack: webpackConfig,
+                publicPath: "/" + webpackConfig.output.publicPath
+            },
+            start: {
+                keepAlive: true,
+                webpack: {
+                    devtool: "eval",
+                    debug: true
                 }
             }
         },
-        env: {
-            options: {
-                //Shared Options Hash
-            },
-            development: {
-                NODE_ENV: 'development',
-                PORT: 3310
-            },
-            production: {
-                NODE_ENV: 'production',
-                PORT: 3000
-            },
-            testing: {
-                NODE_ENV: 'testing',
-                PORT: 3310
+        watch: {
+            app: {
+                files: ["app/**/*", "web_modules/**/*"],
+                tasks: ["webpack:build-dev"],
+                options: {
+                    spawn: false,
+                }
             }
-        },
-        shell: {
-            // If you want to use some bash script with a grunt command use this option
-            // build: {
-            //     command: ''
-            // }
         }
     });
 
-    grunt.registerTask('default', ['env:development', 'nodemon']);
-    grunt.registerTask('production', ['env:production', 'nodemon']);
-    grunt.registerTask('test', ['env:testing', 'mochaTest']);
+    // The development server (the recommended option for development)
+    grunt.registerTask("default", ["webpack-dev-server:start"]);
+
+    // Build and watch cycle (another option for development)
+    // Advantage: No server required, can run app from filesystem
+    // Disadvantage: Requests are not blocked until bundle is available,
+    //               can serve an old app on too fast refresh
+    grunt.registerTask("dev", ["webpack:build-dev", "watch:app"]);
+
+    // Production build
+    grunt.registerTask("build", ["webpack:build"]);
 };

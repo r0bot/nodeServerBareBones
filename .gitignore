@@ -34,3 +34,6 @@ storage/
 
 #Ignore development config
 config/environments/development.js
+
+#Ignore dist folder
+public/dist
