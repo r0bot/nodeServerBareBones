@@ -9,7 +9,9 @@ module.exports = (function () {
     var applicationModuleName = 'nodeBareBones',
         applicationModuleVendorDependencies = [
             require('angular-ui-router'),
-            require('angular-cookies')
+            require('angular-cookies'),
+            require('angular-messages'),
+            require('angular-material')
         ],
         ngApp = angular.module(applicationModuleName, applicationModuleVendorDependencies),
     //Function to register modules in the angular app

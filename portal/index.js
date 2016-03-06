@@ -1,6 +1,6 @@
 /*jslint node: true todo: true nomen: true*/
 'use strict';
-
+require('lodash');
 //Register application module
 var application = require('./app');
 

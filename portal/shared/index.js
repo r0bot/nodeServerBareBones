@@ -3,6 +3,6 @@
 'use strict';
 
 module.exports = function (application) {
-    var ngModule = application.registerModule('shared');
+    var ngModule = application.registerModule('shared', [require('angular-formly')]);
     require('./users')(ngModule);
 };
