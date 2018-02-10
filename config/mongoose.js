@@ -1,13 +1,14 @@
-var mongoose = require('mongoose');
-var config = require('./config');
+const mongoose = require('mongoose');
+const config = require('./config');
 
-module.exports = (function () {
-    mongoose.connect(config.db);
-    mongoose.connection
-        .on('error', function () {
-            console.log('Error occurred with the db connection!');
-        })
-        .once('open', function () {
-            console.log('DB connection opened!');
-        });
+// TODO fix this with log
+module.exports = (() => {
+  mongoose.connection
+    .on('error', () => {
+      console.log('Error occurred with the mongodb connection!');
+    })
+    .once('open', () => {
+      console.log('MongoDB connection opened!');
+    });
+  mongoose.connect(config.db);
 })();

@@ -1,14 +1,15 @@
-/*jslint node: true todo: true nomen: true*/
-'use strict';
+/* jslint node: true todo: true nomen: true */
 
-var express = require('express'),
-    router = express.Router();
 
-router.get('/', function (req, res) {
-    /*jslint unparam: true*/
-    res.render('index', {
-        title: 'Bare Bones Server'
-    });
+const express = require('express');
+
+const router = express.Router();
+
+router.get('/', (req, res) => {
+  /* jslint unparam: true */
+  res.render('index', {
+    title: 'Bare Bones Server',
+  });
 });
 
 module.exports = router;

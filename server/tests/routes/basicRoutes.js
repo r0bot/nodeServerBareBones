@@ -1,27 +1,28 @@
-'use strict';
 
-var should = require('should'),
-    request = require('request'),
-    expect = require('chai').expect,
-    config = require('./../../../config/config');
 
-var CorrectStatus, wrongStatus;
+const should = require('should');
+const request = require('request');
+const expect = require('chai').expect;
+const config = require('./../../../config/config');
 
-describe('Basic routes:', function() {
-    before(function(done) {
+let CorrectStatus,
+  wrongStatus;
+
+describe('Basic routes:', () => {
+  before((done) => {
+    done();
+  });
+
+  describe('Test app entry route', () => {
+    it('should give Status 200', (done) => {
+      request.get(`${config.baseUrl}/`, (err, res, body) => {
+        expect(res.statusCode).to.equal(200);
         done();
+      });
     });
+  });
 
-    describe('Test app entry route', function() {
-        it('should give Status 200', function(done) {
-            request.get(config.baseUrl + '/', function (err, res, body){
-                expect(res.statusCode).to.equal(200);
-                done();
-            });
-        });
-    });
-
-    after(function(done) {
-        done();
-    });
+  after((done) => {
+    done();
+  });
 });

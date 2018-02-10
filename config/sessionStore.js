@@ -1,31 +1,30 @@
-/*jslint node: true todo: true nomen: true*/
-/*globals */
-'use strict';
+/* jslint node: true todo: true nomen: true */
+/* globals */
 
-var config = require('./config');
-var Sequelize = require('sequelize');
-var session = require('express-session');
+
+const config = require('./config');
+const Sequelize = require('sequelize');
+const session = require('express-session');
+// initalize sequelize with session store
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 module.exports = function () {
-    // initalize sequelize with session store
-    var SequelizeStore = require('connect-session-sequelize')(session.Store);
+  // create database, ensure 'sqlite3' in your package.json
+  const sequelize = new Sequelize(
+    config.sessionStore.database,
+    config.sessionStore.username,
+    config.sessionStore.password,
+    {
+      dialect: 'sqlite',
+      storage: config.sessionStore.storagePath,
+    },
+  );
 
-// create database, ensure 'sqlite3' in your package.json
-    var sequelize = new Sequelize(
-        config.sessionStore.database,
-        config.sessionStore.username,
-        config.sessionStore.password,
-        {
-            "dialect": "sqlite",
-            "storage": config.sessionStore.storagePath
-        }
-    );
+  const sessionStore = new SequelizeStore({
+    db: sequelize,
+  });
 
-    var sessionStore = new SequelizeStore({
-        db: sequelize
-    });
+  sessionStore.sync();
 
-    sessionStore.sync();
-
-    return sessionStore;
+  return sessionStore;
 };

@@ -1,0 +1,8 @@
+{
+  "sqlDb":{
+    "connectionString": "mysql://user:pass@example.com:9821/db_name",
+    "options": {
+      "dialect": "mysql"
+    }
+  }
+}

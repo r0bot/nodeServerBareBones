@@ -1,65 +1,68 @@
-/*jslint node: true todo: true*/
-'use strict';
+/* jslint node: true todo: true */
 
-var express = require('express');
-var router = express.Router();
 
-module.exports = function () {
-    var UsersController = require('./../../controllers/Users/UsersController')();
+const express = require('express');
 
-    function getAllUsers(req, res) {
-        /*jslint unparam: true*/
-        UsersController.getAll(function (error, users) {
-            if (error) {
-                res.json(error);
-            }
-            res.json(users);
-        });
+const router = express.Router();
+const UsersController = require('./../../controllers/Users/UsersController')();
+
+function getAllUsers(req, res) {
+  /* jslint unparam: true */
+  UsersController.getAll((error, users) => {
+    if (error) {
+      res.json(error);
     }
+    res.json(users);
+  });
+}
 
-    function createUser(req, res) {
-        var userData = req.body;
+function createUser(req, res) {
+  const userData = req.body;
 
-        UsersController.createUser(userData, function (error, createdUser) {
-            if (error) {
-                res.json(error);
-            }
-            res.json(createdUser);
-        });
+  UsersController.createUser(userData, (error, createdUser) => {
+    if (error) {
+      res.json(error);
     }
+    res.json(createdUser);
+  });
+}
 
-    function getUserById(req, res) {
-        var params = {
-            id: req.params.id,
-            propertiesToUpdate: req.body
-        };
+/**
+ * @param req
+ * @param res
+ */
+function getUserById({ params: { id }, body }, res) {
+  const params = {
+    id,
+    propertiesToUpdate: body,
+  };
 
-        UsersController.getById(params, function (error, user) {
-            if (error) {
-                res.json(error);
-            }
-            res.json(user);
-        });
+  UsersController.updateById(params, (error, user) => {
+    if (error) {
+      res.json(error);
     }
+    res.json(user);
+  });
+}
 
-    function updateUser(req, res) {
-        var id = req.params.id;
-
-        UsersController.updateById(id, function (error, user) {
-            if (error) {
-                res.json(error);
-            }
-            res.json(user);
-        });
+/**
+ * @param req
+ * @param res
+ */
+function updateUser({ params: { id } }, res) {
+  UsersController.getById(id, (error, user) => {
+    if (error) {
+      res.json(error);
     }
+    res.json(user);
+  });
+}
+router.route('/')
+  .get(getAllUsers)
+  .post(createUser);
 
-    router.route('/')
-        .get(getAllUsers)
-        .post(createUser);
+router.route('/:id')
+  .get(getUserById)
+  .put(updateUser);
 
-    router.route('/:id')
-        .get(getUserById)
-        .put(updateUser);
-
-    return router;
-};
+module.exports = router;

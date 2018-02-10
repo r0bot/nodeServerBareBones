@@ -1,155 +1,132 @@
-'use strict';
-var bluebird = require('bluebird');
+const User = require('../models/User');
 
-var User = require('./../models/User/User');
-
-function getAll () {
-    var deferred = bluebird.defer();
-
-    User
-        .find({}, function (error, users) {
-            if (error) {
-                deferred.reject(error);
-            }
-
-            deferred.resolve(users);
-        });
-
-    return deferred.promise;
+function getAll(callback) {
+  User.find({}, callback);
 }
 
-function getByTwitterID (id) {
-    var deferred = bluebird.defer();
+function getByTwitterID(id) {
+  const deferred = bluebird.defer();
 
-    User
-        .findOne({twitterID:id}, function (error, user) {
-            if (error) {
-                deferred.reject(error);
-            }
+  User
+    .findOne({ twitterID: id }, (error, user) => {
+      if (error) {
+        deferred.reject(error);
+      }
 
-            deferred.resolve(user);
-        });
-
-    return deferred.promise;
-}
-
-function getById (id) {
-    var deferred = bluebird.defer();
-
-    User
-        .findById(id, function (error, user) {
-            if (error) {
-                deferred.reject(error);
-            }
-
-            deferred.resolve(user);
-        });
-
-    return deferred.promise;
-}
-
-function updateById (id, updatesObject) {
-    var deferred = bluebird.defer();
-
-    User.findByIdAndUpdate(id, updatesObject, function (error, updatedUser) {
-        if (error) {
-            deferred.reject(error);
-            return deferred.promise;
-        }
-
-        deferred.resolve(updatedUser);
+      deferred.resolve(user);
     });
 
-    return deferred.promise;
+  return deferred.promise;
 }
 
-function removeById (id) {
-    var deferred = bluebird.defer();
+function getById(id) {
+  const deferred = bluebird.defer();
 
-    return deferred.promise;
-}
+  User
+    .findById(id, (error, user) => {
+      if (error) {
+        deferred.reject(error);
+      }
 
-function removeAll () {
-    //var deferred = bluebird.defer();
-
-    //return deferred.promise;
-}
-
-function createUser (userData, done) {
-
-    var newUser = new User({
-        username: userData.username,
-        provider: userData.provider,
-        email: userData.email,
-        phoneNumber: userData.phoneNumber,
-        firstName: userData.firstName,
-        lastName: userData.lastName,
-        displayName: userData.firstName + ' ' + userData.lastName,
-        city: userData.city,
-        country: userData.country,
-        postalCode: userData.postalCode,
-        address: userData.address
+      deferred.resolve(user);
     });
 
-    newUser.password = newUser.generateHash(password);
+  return deferred.promise;
+}
 
-    if (userData.roles) {
-        newUser.roles = userData.roles;
+function updateById(id, updatesObject) {
+  const deferred = bluebird.defer();
+
+  User.findByIdAndUpdate(id, updatesObject, (error, updatedUser) => {
+    if (error) {
+      deferred.reject(error);
+      return deferred.promise;
     }
 
-    newUser.save(function (error) {
-        if (error) {
-            done(error);
-        }
+    deferred.resolve(updatedUser);
+  });
 
-        return done(null, newUser, { message: 'Sign up succeeded!' });
-    });
+  return deferred.promise;
 }
 
-function find (searchCriteria, searchOptions) {
-    var deferred = bluebird.defer();
+function removeById(id) {
+  const deferred = bluebird.defer();
 
-    if(searchOptions.singleResult){
-        User.findOne(searchCriteria, function (error, user) {
-            if (error) {
-                deferred.reject(error);
-                return deferred.promise;
-            }
+  return deferred.promise;
+}
 
-            deferred.resolve(user);
-        });
-    }else{
-        User.find(searchCriteria, function (error, user) {
-            if (error) {
-                deferred.reject(error);
-                return deferred.promise;
-            }
+function removeAll() {
+  // var deferred = bluebird.defer();
 
-            deferred.resolve(user);
-        });
+  // return deferred.promise;
+}
+
+function createUser(userData, done) {
+  const newUser = new User({
+    username: userData.username,
+    provider: userData.provider,
+    email: userData.email,
+    phoneNumber: userData.phoneNumber,
+    firstName: userData.firstName,
+    lastName: userData.lastName,
+    displayName: `${userData.firstName} ${userData.lastName}`,
+    city: userData.city,
+    country: userData.country,
+    postalCode: userData.postalCode,
+    address: userData.address,
+  });
+
+  newUser.password = newUser.generateHash(password);
+
+  if (userData.roles) {
+    newUser.roles = userData.roles;
+  }
+
+  newUser.save((error) => {
+    if (error) {
+      done(error);
     }
 
-    return deferred.promise;
+    return done(null, newUser, { message: 'Sign up succeeded!' });
+  });
 }
 
-function findOne (searchCriteria) {
-    var deferred = bluebird.defer();
+function find(searchCriteria, searchOptions) {
+  const deferred = bluebird.defer();
 
+  if (searchOptions.singleResult) {
+    User.findOne(searchCriteria, (error, user) => {
+      if (error) {
+        deferred.reject(error);
+        return deferred.promise;
+      }
 
+      deferred.resolve(user);
+    });
+  } else {
+    User.find(searchCriteria, (error, user) => {
+      if (error) {
+        deferred.reject(error);
+        return deferred.promise;
+      }
 
-    return deferred.promise;
+      deferred.resolve(user);
+    });
+  }
+
+  return deferred.promise;
 }
 
 module.exports = {
-    name: 'users',
-    data: {
-        find: find,
-        getAll: getAll,
-        getById: getById,
-        getByTwitterID: getByTwitterID,
-        createUser: createUser,
-        updateById: updateById,
-        removeById: removeById,
-        removeAll: removeAll
-    }
+  name: 'users',
+  data: {
+    find,
+    getAll,
+    getById,
+    getByTwitterID,
+    createUser,
+    updateById,
+    removeById,
+    removeAll,
+  },
 };
