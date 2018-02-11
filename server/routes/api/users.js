@@ -4,11 +4,11 @@
 const express = require('express');
 
 const router = express.Router();
-const UsersController = require('./../../controllers/Users/UsersController')();
+const Users = require('./../../Users');
 
 function getAllUsers(req, res) {
   /* jslint unparam: true */
-  UsersController.getAll((error, users) => {
+  Users.getAll((error, users) => {
     if (error) {
       res.json(error);
     }
@@ -19,30 +19,23 @@ function getAllUsers(req, res) {
 function createUser(req, res) {
   const userData = req.body;
 
-  UsersController.createUser(userData, (error, createdUser) => {
-    if (error) {
-      res.json(error);
-    }
-    res.json(createdUser);
-  });
+  const [error, result] = Users.createUser(userData);
+  if (error) {
+    return res.json(error);
+  }
+  return res.json(result);
 }
 
 /**
  * @param req
  * @param res
  */
-function getUserById({ params: { id }, body }, res) {
-  const params = {
-    id,
-    propertiesToUpdate: body,
-  };
-
-  UsersController.updateById(params, (error, user) => {
-    if (error) {
-      res.json(error);
-    }
-    res.json(user);
-  });
+async function getUserById({ params: { id } }, res) {
+  const [error, result] = await Users.getById(id);
+  if (error) {
+    res.json(error);
+  }
+  return res.json(result);
 }
 
 /**
@@ -62,7 +55,6 @@ router.route('/')
   .post(createUser);
 
 router.route('/:id')
-  .get(getUserById)
-  .put(updateUser);
+  .get(getUserById);
 
 module.exports = router;

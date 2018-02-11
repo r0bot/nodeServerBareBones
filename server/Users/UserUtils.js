@@ -18,20 +18,7 @@ function getPublicUser(user) {
   };
 }
 
-/**
- * @param userModel
- * @param {function} callback {Error|error.BaseError}
-*/
-function validateUserPasswordByModel(userModel, callback) {
-  if (typeof userModel.validPassword === 'function') {
-    callback(null, userModel.validPassword(userModel.password));
-    return;
-  }
-  callback(new Error('User model is missing validPassword method.'));
-}
-
 
 module.exports = {
-  validateUserPasswordByModel,
   getPublicUser,
 };

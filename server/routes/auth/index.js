@@ -2,7 +2,7 @@
 const express = require('express');
 
 const router = express.Router();
-const AuthenticationController = require('./../../controllers/Authentication/AuthenticationController')();
+const AuthenticationController = require('../../Authentication/index')();
 
 function login(req, res) {
   AuthenticationController.login(req, res, (error, user) => {
