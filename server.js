@@ -1,34 +1,25 @@
-
-
-// This must always be the first thing called when initiating the server as it sets needed root properties creates folder and so on.
-global.appConfig = require('./config/config');
-
-// Init mongooose
-require('./config/mongoose');
+const config = require('config');
 
 // Config passport and add strategies to it
-require('./config/passport')();
+require('./server/configs/passport')();
 
-const sessionStore = require('./config/sessionStore')();
+const sessionStore = require('./server/configs/sessionStore')();
 
 // Config express
-const app = require('./config/express')(sessionStore);
+const app = require('./server/configs/express')(sessionStore);
 // Config the socketIO server
-const socketIo = require('./config/express')(app, sessionStore);
-
-// Start socket io
-socketIo.listen(global.appConfig.socketIO.port);
+require('./server/configs/socketio')(app, sessionStore);
 
 // Add the routes to the app
-require('./config/routes')(app);
+require('./server/configs/routes')(app);
 
 // Init the server
-app.listen(global.appConfig.port, global.appConfig.ip, () => {
+app.listen(config.get('server.port'), config.get('server.ip'), () => {
   console.log('====================== Configuration =========================');
-  console.log('Environment: ', global.appConfig.environment);
-  console.log('Port: ', global.appConfig.port);
-  console.log('IP: ', global.appConfig.ip);
-  console.log('Database connection string: ', global.appConfig.db);
+  console.log('Environment: ', config.get('environment'));
+  console.log('Port: ', config.get('server.port'));
+  console.log('IP: ', config.get('server.ip'));
+  console.log('Database connection string: ', 'test');
   console.log('==============================================================');
 });
 

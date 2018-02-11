@@ -33,4 +33,5 @@ module.exports = (app, sessionStore) => {
   io.on('connection', () => {
 
   });
+  return io;
 };

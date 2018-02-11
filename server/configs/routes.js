@@ -3,11 +3,11 @@
 
 module.exports = (app) => {
   // Get authentication controller and plug isLoggedIn function as a middleware for routes that require authentication
-  let authController = require('../server/Authentication/index')(),
+  let authController = require('../Authentication/index')(),
     // Get route definitions
-    routes = require('./../server/routes'),
-    auth = require('./../server/routes/auth')(),
-    users = require('./../server/routes/api/users')();
+    routes = require('../routes/index'),
+    auth = require('../routes/auth/index')(),
+    users = require('../routes/api/users')();
 
     // Basic app routes
   app.use('/', routes);

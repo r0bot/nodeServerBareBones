@@ -23,7 +23,20 @@ async function getById(userMail) {
   let error;
   let result;
   try {
-    const usersData = await users.findOne({ id: userMail });
+    const usersData = await users.findOne({ where: { id: userMail } });
+    result = usersData.map(user => userUtils.getPublicUser(user));
+  } catch (err) {
+    // TODO throw custom error
+    error = err;
+  }
+  return [error, result];
+}
+
+async function getByUsername(userMail) {
+  let error;
+  let result;
+  try {
+    const usersData = await users.findOne({ where: { username: userMail } });
     result = usersData.map(user => userUtils.getPublicUser(user));
   } catch (err) {
     // TODO throw custom error
@@ -46,8 +59,15 @@ async function createUser(userData) {
   return [error, result];
 }
 
+async function validateUserPassword() {
+  // TODO do actual validation
+  return true;
+}
+
 module.exports = {
   getAll,
   getById,
+  getByUsername,
   createUser,
+  validateUserPassword
 };

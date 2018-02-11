@@ -1,42 +1,39 @@
-/* jslint node: true todo: true nomen: true */
-
-
 const express = require('express');
-const path = require('path');
 const fs = require('fs');
 const favicon = require('serve-favicon');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const morgan = require('morgan');
-const config = require('./config');
+const config = require('config');
 const passport = require('passport');
 const _ = require('lodash');
 
-module.exports = function (sessionStore) {
+const LOGS_PATH = './../../logs';
+
+module.exports = (sessionStore) => {
   // Init app variable
   const app = express();
-  app.locals.cssFiles = config.getCSSAssets();
-  app.locals.jsFiles = config.getJavaScriptAssets();
 
   app.set('port', config.session);
 
   app.set('view engine', 'pug');
-  app.set('views', path.join(config.rootPath, 'server/views'));
+  app.set('views', './../views');
 
   // Setting static folder to serve
-  app.use(express.static(path.join(config.rootPath, 'public')));
+  app.use(express.static('./../public'));
 
   // Setting static folder for images
-  app.use(express.static(config.storageDir));
+  app.use(express.static('./../storage'));
 
 
-  app.use(favicon(path.join(config.rootPath, 'favicon.ico')));
+  app.use(favicon('./../../favicon.ico'));
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(cookieParser());
 
-  // Configure session management. Extend the options with store. If not provided (null/undefined) express will fallback to default MemStore.
+  // Configure session management. Extend the options with store.
+  // If not provided (null/undefined) express will fallback to default MemStore.
   app.use(session(_.assign(config.session, { store: sessionStore })));
 
   // Initialize passport
@@ -44,8 +41,6 @@ module.exports = function (sessionStore) {
   app.use(passport.session());
 
   // Enable logger (morgan) and set where to save the logs
-  const LOGS_PATH = `${config.rootPath}/logs`;
-
   if (!fs.existsSync(LOGS_PATH)) {
     fs.mkdirSync(LOGS_PATH);
   }
@@ -60,7 +55,7 @@ module.exports = function (sessionStore) {
     }));
   }
 
-  // // Access-Control-Allow-Origin headers configuration
+  // Access-Control-Allow-Origin headers configuration
   app.use((req, res, next) => {
     res.header('Access-Control-Allow-Credentials', true);
     res.header('Access-Control-Allow-Origin', '*');

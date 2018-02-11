@@ -2,7 +2,7 @@
 /* globals */
 
 
-const config = require('./config');
+const config = require('../../config/config');
 const Sequelize = require('sequelize');
 const session = require('express-session');
 // initalize sequelize with session store
