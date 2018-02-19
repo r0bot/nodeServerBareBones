@@ -1,6 +1,3 @@
-/* jslint node: true todo: true nomen: true */
-
-
 const express = require('express');
 
 const router = express.Router();

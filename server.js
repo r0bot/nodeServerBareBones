@@ -7,8 +7,10 @@ const sessionStore = require('./server/configs/sessionStore')();
 
 // Config express
 const app = require('./server/configs/express')(sessionStore);
+
+// TODO enable socketio when needed
 // Config the socketIO server
-require('./server/configs/socketio')(app, sessionStore);
+// require('./server/configs/socketio')(app, sessionStore);
 
 // Add the routes to the app
 require('./server/configs/routes')(app);

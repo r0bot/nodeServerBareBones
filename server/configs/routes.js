@@ -1,15 +1,10 @@
-/* jslint node: true todo: true nomen: true */
-
+const authController = require('./../authentication');
+const routes = require('../routes/index');
+const auth = require('../routes/auth');
+const users = require('../routes/users');
 
 module.exports = (app) => {
-  // Get authentication controller and plug isLoggedIn function as a middleware for routes that require authentication
-  let authController = require('../Authentication/index')(),
-    // Get route definitions
-    routes = require('../routes/index'),
-    auth = require('../routes/auth/index')(),
-    users = require('../routes/api/users')();
-
-    // Basic app routes
+  // Basic app routes
   app.use('/', routes);
   app.use('/auth', auth);
 

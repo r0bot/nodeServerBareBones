@@ -1,6 +1,3 @@
-/* jslint node: true todo: true */
-
-
 const express = require('express');
 
 const router = express.Router();
@@ -38,18 +35,20 @@ async function getUserById({ params: { id } }, res) {
   return res.json(result);
 }
 
-/**
- * @param req
- * @param res
- */
-function updateUser({ params: { id } }, res) {
-  UsersController.getById(id, (error, user) => {
-    if (error) {
-      res.json(error);
-    }
-    res.json(user);
-  });
-}
+// TODO add update of user
+// /**
+//  * @param req
+//  * @param res
+//  */
+// function updateUser({ params: { id } }, res) {
+//   Users.getById(id, (error, user) => {
+//     if (error) {
+//       res.json(error);
+//     }
+//     res.json(user);
+//   });
+// }
+
 router.route('/')
   .get(getAllUsers)
   .post(createUser);

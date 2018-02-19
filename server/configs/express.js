@@ -1,4 +1,5 @@
 const express = require('express');
+const helmet = require('helmet');
 const fs = require('fs');
 const favicon = require('serve-favicon');
 const cookieParser = require('cookie-parser');
@@ -14,6 +15,7 @@ const LOGS_PATH = './../../logs';
 module.exports = (sessionStore) => {
   // Init app variable
   const app = express();
+  app.use(helmet());
 
   app.set('port', config.session);
 
@@ -27,14 +29,14 @@ module.exports = (sessionStore) => {
   app.use(express.static('./../storage'));
 
 
-  app.use(favicon('./../../favicon.ico'));
+  app.use(favicon('./favicon.ico'));
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(cookieParser());
 
   // Configure session management. Extend the options with store.
   // If not provided (null/undefined) express will fallback to default MemStore.
-  app.use(session(_.assign(config.session, { store: sessionStore })));
+  app.use(session(_.assign(config.get('sessions'), { store: sessionStore })));
 
   // Initialize passport
   app.use(passport.initialize());
