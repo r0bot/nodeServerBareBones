@@ -19,11 +19,11 @@ module.exports = (sessionStore) => {
 
   app.set('port', config.session);
 
-  app.set('view engine', 'pug');
-  app.set('views', './../views');
+  app.set('view engine', 'ejs');
+  app.set('views', './server/views');
 
   // Setting static folder to serve
-  app.use(express.static('./../public'));
+  app.use(express.static('./public'));
 
   // Setting static folder for images
   app.use(express.static('./../storage'));

@@ -15,10 +15,10 @@
     "secret": "keyboard cat",
     "resave": false,
     "saveUninitialized": true,
-    "cookie": { "secure": true }
+    "cookie": { "secure": false }
   },
   "server": {
-    "ip": "192.168.1.159",
+    "ip": "localhost",
     "port": 3310
   }
 }

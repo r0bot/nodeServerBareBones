@@ -1,28 +1,15 @@
-const webpack = require('webpack');
+const path = require('path');
 
 const config = {
-  context: `${__dirname}/portal`,
+  context: `${__dirname}/client`,
   entry: './index.js',
   output: {
-    path: `${__dirname}/public/dist`,
+    path: path.resolve(__dirname, 'public'),
     filename: 'bundle.js',
   },
-
-  plugins: [
-    new webpack.DefinePlugin({
-      ON_TEST: process.env.NODE_ENV === 'test',
-    }),
-    new webpack.ProvidePlugin({
-      lodash: 'lodash',
-    }),
-  ],
-
   module: {
     loaders: [
-      { test: /\.js$/, loader: 'ng-annotate!babel', exclude: /node_modules/ },
-      { test: /\.html$/, loader: 'raw', exclude: /node_modules/ },
-      { test: /\.css$/, loader: 'style!css', exclude: /node_modules/ },
-      { test: /\.less$/, loader: 'style!css!less', exclude: /node_modules/ },
+      { test: /\.js$/, use: 'babel-loader' }
     ],
   },
 };
