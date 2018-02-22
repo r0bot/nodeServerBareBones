@@ -1,4 +1,11 @@
+const webpack = require('webpack');
 const path = require('path');
+
+const plugins = [
+  new webpack.ProvidePlugin({
+    React: 'react'
+  })
+];
 
 const config = {
   context: path.resolve('./client'),
@@ -8,6 +15,8 @@ const config = {
     filename: 'bundle.js'
   },
 
+  plugins,
+
   module: {
     rules: [
       {
@@ -16,7 +25,7 @@ const config = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['react', 'stage-2'] // 'env',
+            presets: ['react'] // 'stage-2'. 'env'
           }
         }
       }
