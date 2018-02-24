@@ -2,10 +2,11 @@
     "env": {
         "browser": true
     },
-    "plugins": [
-        "react"
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended"
     ],
     "rules": {
-        "react/jsx-uses-vars": 2
+        "func-names": "off"
     }
 }
