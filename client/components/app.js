@@ -1,22 +1,20 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import HomePage from './home/home-page';
+import { Route } from 'react-router-dom';
+// import PropTypes from 'prop-types';
+import HomePage from '../pages/home-page';
+import RegisterPage from '../pages/register-page';
+import Header from './header';
 
 export default class App extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <section>
-        <h2>Hello from react {this.props.test}!</h2>
-        <HomePage />
+        <Header />
+        <section>
+          <Route exact path="/" component={HomePage}></Route>
+          <Route exact path="/register" component={RegisterPage}></Route>
+        </section>
       </section>
     );
   }
 }
-
-App.propTypes = {
-  test: PropTypes.string.isRequired
-};
