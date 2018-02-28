@@ -16,7 +16,7 @@ module.exports = function () {
       idle: 10000,
     },
     // SQLite only
-    storage: './storage/data/sessions.sqlite',
+    storage: './storage/sessions.sqlite',
   });
 
   const sessionStore = new SequelizeStore({

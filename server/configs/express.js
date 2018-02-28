@@ -25,10 +25,6 @@ module.exports = (sessionStore) => {
   // Setting static folder to serve
   app.use(express.static('./public'));
 
-  // Setting static folder for images
-  app.use(express.static('./../storage'));
-
-
   app.use(favicon('./favicon.ico'));
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));

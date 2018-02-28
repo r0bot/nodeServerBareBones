@@ -4,23 +4,20 @@ const config = require('config');
 const userUtils = require('./UserUtils');
 
 let sequelize = null;
-try {
-  sequelize = new Sequelize('users', '', '', {
-    host: 'localhost',
-    dialect: 'sqlite',
-    pool: {
-      max: 5,
-      min: 0,
-      acquire: 30000,
-      idle: 10000,
-    },
-    // SQLite only
-    storage: './storage/data/database.sqlite',
-  });
-} catch (err) {
-  console.log('chep');
-}
+
 // TODO fix this to use config and not hardocded props
+sequelize = new Sequelize('users', '', '', {
+  host: 'localhost',
+  dialect: 'sqlite',
+  pool: {
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000,
+  },
+  // SQLite only
+  storage: './storage/database.sqlite',
+});
 
 const users = require('./UserModel')(sequelize);
 

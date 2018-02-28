@@ -1,7 +1,7 @@
 const path = require('path');
 
 const config = {
-  context: `${__dirname}/client`,
+  context: path.resolve(__dirname, 'client'),
   entry: './index.js',
   output: {
     path: path.resolve(__dirname, 'public'),
@@ -9,7 +9,7 @@ const config = {
   },
   module: {
     loaders: [
-      { test: /\.js$/, use: 'babel-loader' }
+      { test: /\.js$/, exclude: /node_modules/, use: 'babel-loader' },
     ],
   },
 };
