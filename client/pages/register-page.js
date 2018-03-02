@@ -9,6 +9,7 @@ export default class RegisterPage extends Component {
 
   onFormSubmit(userData) {
     console.log('user data: ', userData);
+    // this.props.actions.registerUser(userData);
   }
 
   render() {

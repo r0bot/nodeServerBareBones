@@ -4,14 +4,20 @@ import RegisterPage from '../pages/register-page';
 
 function mapStateToProps(state, ownProps) {
   return {
+    
+  };
+}
 
+function buildUserRegisteredAction(data) {
+  return () => {
+    
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    onSubmit: () => {
-      dispatch()
+    reguster: () => {
+      dispatch(buildUserRegisteredAction(userdata))
     }
   };
 }

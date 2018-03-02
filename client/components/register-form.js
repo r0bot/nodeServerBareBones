@@ -6,16 +6,22 @@ export default class RegisterForm extends Component {
     super(props);
     this.email = '';
     this.password = '';
+    this.confirmPassword = '';
     this.onInputChange = this.onInputChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
   onInputChange(ev) {
-    this[ev.target.type] = ev.target.value;
+    this[ev.target.name] = ev.target.value;
   }
 
   onSubmit(ev) {
     ev.preventDefault();
+
+    if (this.password !== this.confirmPassword) {
+      return console.error('Passwords do not match');
+    }
+    
     this.props.onSubmit({
       email: this.email,
       password: this.password
@@ -25,9 +31,9 @@ export default class RegisterForm extends Component {
   render() {
     return (
       <form onSubmit={this.onSubmit}>
-        <input type="email" placeholder="Email" onChange={this.onInputChange} />
-        <input type="password" placeholder="Password" onChange={this.onInputChange} />
-        {/* TODO: confirm password field */}
+        <input type="email" placeholder="Email" name="email" onChange={this.onInputChange} />
+        <input type="password" placeholder="Password" name="password" onChange={this.onInputChange} />
+        <input type="password" placeholder="Confirm Password" name="confirmPassword" onChange={this.onInputChange} />
         <input type="submit" value="Register" />
       </form>
     );
