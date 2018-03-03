@@ -1,19 +1,19 @@
 const config = require('config');
 
 // Config passport and add strategies to it
-require('./server/configs/passport')();
+require('./configs/passport')();
 
-const sessionStore = require('./server/configs/sessionStore')();
+const sessionStore = require('./configs/sessionStore')();
 
 // Config express
-const app = require('./server/configs/express')(sessionStore);
+const app = require('./configs/express')(sessionStore);
 
 // TODO enable socketio when needed
 // Config the socketIO server
-// require('./server/configs/socketio')(app, sessionStore);
+// require('./configs/socketio')(app, sessionStore);
 
 // Add the routes to the app
-require('./server/configs/routes')(app);
+require('./configs/routes')(app);
 
 // Init the server
 app.listen(config.get('server.port'), config.get('server.ip'), () => {

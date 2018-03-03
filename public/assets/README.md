@@ -1,1 +1,0 @@
-# All the shared assets in the application
