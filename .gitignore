@@ -32,6 +32,9 @@ node_modules
 #Ignore everything in storage folder as this is supposed to be instance related data
 storage/*.*
 
+#Ignore the dist folder
+public/dist
+
 #Ignore development config
 config/environments/development.js
 
