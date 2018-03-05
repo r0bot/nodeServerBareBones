@@ -1,14 +1,14 @@
 /* globals localStorage */
 import axios from 'axios';
-import { browserHistory } from 'react-router';
-import { API_URL } from '../config';
+
+import { API_URL } from './../config/index';
 import {
   SIGNUP_SUCCESS,
   SIGNUP_FAILURE,
   SIGNIN_FAILURE,
   AUTH_USER,
   UNAUTH_USER,
-} from '../constants/index';
+} from './../constants/index';
 
 export function authError(CONST, error) {
   return {
@@ -20,13 +20,13 @@ export function authError(CONST, error) {
 
 export function signupUser(props) {
   return function (dispatch) {
-    axios.post(`${API_URL}/signup`, props)
+    axios.post(`${API_URL}/auth/register`, props)
       .then(() => {
         dispatch({ type: SIGNUP_SUCCESS });
-
-        browserHistory.push('/signin');
       })
-      .catch(response => dispatch(authError(SIGNUP_FAILURE, response.data.error)));
+      .catch((response) =>{
+        dispatch(authError(SIGNUP_FAILURE, response.data.error))
+      });
   };
 }
 
@@ -37,10 +37,7 @@ export function signinUser(props) {
     axios.post(`${API_URL}/signin`, { email, password })
       .then((response) => {
         localStorage.setItem('user', JSON.stringify(response.data));
-
         dispatch({ type: AUTH_USER });
-
-        browserHistory.push('/users');
       })
       .catch(() => dispatch(authError(SIGNIN_FAILURE, "Email or password isn't correct")));
   };
@@ -48,7 +45,7 @@ export function signinUser(props) {
 
 
 export function signoutUser() {
-  localStorage.clear();
+  localStorage.removeItem('user');
 
   return {
     type: UNAUTH_USER,
