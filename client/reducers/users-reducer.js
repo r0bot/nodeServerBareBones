@@ -7,9 +7,9 @@ function usersReducer(state = false, action) {
   switch (action.type) {
     case SIGNUP_SUCCESS:
     case AUTH_USER:
-      return {...state, authenticated: true};
+      return { ...state, authenticated: true };
     case UNAUTH_USER:
-      return {...state, authenticated: false};
+      return { ...state, authenticated: false };
     default:
       return state;
   }

@@ -1,33 +1,44 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
-import { connect } from "react-redux";
-import { AppBar, Checkbox, IconButton } from 'react-toolbox';
-import { Layout, NavDrawer, Panel, Sidebar } from 'react-toolbox';
+import { Link, Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { AppBar, Navigation, Layout, Button, Panel } from 'react-toolbox';
 
-import HomePage from '../pages/home-page';
-import RegisterPage from '../pages/register-page';
-import Header from './header';
+import * as actions from './../actions/auth';
 import Footer from './footer';
+import HomePage from '../pages/home-page';
+import ContactsPage from '../pages/contacts-page';
+import RegisterPage from '../pages/register-page';
+import appBarTheme from '../theme/appBar.css';
 
 class App extends Component {
   render() {
     const { user } = this.props;
+    console.log(JSON.stringify(user))
     return (
       <Layout>
-        <Header />
-        <section>
-          <Route exact path="/" component={HomePage} />
-          <Route exact path="/register" component={RegisterPage} disabled={user.authenticated} />
-        </section>
-        <Footer />
+        <Panel>
+          <AppBar title='AIoT' leftIcon='menu' theme={appBarTheme}>
+            <Navigation type='horizontal'>
+              <Link to="/home"><Button icon='inbox' label='Home' flat /></Link>
+              {!user.authenticated && <Link to="/register" ><Button icon='inbox' label='Register' flat /></Link>}
+              {user.authenticated && <Button icon='inbox' label='Signout' flat />}
+            </Navigation>
+          </AppBar>
+          <Switch>
+            <Route exact path="/home" component={HomePage} />
+            <Route exact path="/register" component={RegisterPage} />
+            <Route exact path="/contacts" component={ContactsPage} />
+          </Switch>
+          <Footer />
+        </Panel>
       </Layout>
     );
   }
 }
 
 function mapStateToProps(state) {
-  return { user: state.user || {}}
+  return { user: state.user || {} };
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, actions)(App);
 

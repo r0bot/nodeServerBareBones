@@ -6,6 +6,7 @@ import {
   SIGNUP_SUCCESS,
   SIGNUP_FAILURE,
   SIGNIN_FAILURE,
+  SIGNOUT_FAILURE,
   AUTH_USER,
   UNAUTH_USER,
 } from './../constants/index';
@@ -24,8 +25,8 @@ export function signupUser(props) {
       .then(() => {
         dispatch({ type: SIGNUP_SUCCESS });
       })
-      .catch((response) =>{
-        dispatch(authError(SIGNUP_FAILURE, response.data.error))
+      .catch((response) => {
+        dispatch(authError(SIGNUP_FAILURE, response.data.error));
       });
   };
 }
@@ -45,9 +46,12 @@ export function signinUser(props) {
 
 
 export function signoutUser() {
-  localStorage.removeItem('user');
-
-  return {
-    type: UNAUTH_USER,
+  return (dispatch) => {
+    axios.post(`${API_URL}/auth/logout`)
+      .then(() => {
+        localStorage.removeItem('user');
+        dispatch({ type: UNAUTH_USER });
+      })
+      .catch(() => dispatch(authError(SIGNOUT_FAILURE, "Email or password isn't correct")));
   };
 }
