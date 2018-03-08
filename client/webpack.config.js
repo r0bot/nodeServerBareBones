@@ -1,48 +1,43 @@
 const path = require('path');
 
 const config = {
-  context: __dirname,
-  entry: {
-    '../public/dist/bundle': './index.js'
-  },
+  context: path.resolve(__dirname, 'client'),
+  entry: './index.js',
   output: {
-    path: path.resolve(__dirname, '../', 'public'),
-    publicPath: '/',
-    filename: '[name].js'
+    path: path.resolve(__dirname, 'public/dist'),
+    filename: 'bundle.js',
   },
-
   module: {
     rules: [
       {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['react'] // 'stage-2'. 'env'
-          }
+        test: /\.js?$/,
+        loader: 'babel-loader',
+        options: {
+          presets: [
+            'env',
+            'stage-2',
+            'react'
+          ]
         }
       },
       {
         test: /\.css$/,
         use: [
-          "style-loader",
+          'style-loader',
           {
-            loader: "css-loader",
+            loader: 'css-loader',
             options: {
-              modules: true, // default is false
+              modules: true,
               sourceMap: true,
               importLoaders: 1,
-              localIdentName: "[name]--[local]--[hash:base64:8]"
+              localIdentName: '[name]--[local]--[hash:base64:8]'
             }
           },
-          "postcss-loader"
+          'postcss-loader' // has separate config, see postcss.config.js nearby
         ]
-      }
+      },
     ]
   },
-
-  devtool: 'source-map'
 };
 
 // config.plugins.push(new webpack.optimize.UglifyJsPlugin());

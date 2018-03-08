@@ -13,7 +13,6 @@ import appBarTheme from '../theme/appBar.css';
 class App extends Component {
   render() {
     const { user } = this.props;
-    console.log(JSON.stringify(user))
     return (
       <Layout>
         <Panel>

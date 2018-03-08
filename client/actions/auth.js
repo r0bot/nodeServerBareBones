@@ -32,22 +32,22 @@ export function signupUser(props) {
 }
 
 export function signinUser(props) {
-  const { email, password } = props;
+  const { username, password } = props;
 
   return (dispatch) => {
-    axios.post(`${API_URL}/signin`, { email, password })
+    axios.post(`${API_URL}/auth/login`, { username, password })
       .then((response) => {
         localStorage.setItem('user', JSON.stringify(response.data));
         dispatch({ type: AUTH_USER });
       })
-      .catch(() => dispatch(authError(SIGNIN_FAILURE, "Email or password isn't correct")));
+      .catch(() => dispatch(authError(SIGNIN_FAILURE, "Username or password isn't correct")));
   };
 }
 
 
 export function signoutUser() {
   return (dispatch) => {
-    axios.post(`${API_URL}/auth/logout`)
+    axios.get(`${API_URL}/auth/logout`)
       .then(() => {
         localStorage.removeItem('user');
         dispatch({ type: UNAUTH_USER });
