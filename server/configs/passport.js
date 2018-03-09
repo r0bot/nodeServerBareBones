@@ -3,14 +3,18 @@ const LocalStrategy = require('passport-local').Strategy;
 const users = require('./../Users');
 
 module.exports = () => {
+  // TODO figure out a smarter way to serialize more data for user and
+  // only ping if active for example
   passport.serializeUser((user, done) => {
     done(null, user.id);
   });
 
-  passport.deserializeUser((id, done) => {
-    users.getById(id, (error, user) => {
-      done(error, user);
-    });
+  passport.deserializeUser(async (id, done) => {
+    const [error, result] = await users.getById(id);
+    if (error) {
+      return done(error);
+    }
+    return done(null, result);
   });
 
   // Initialize the defined login strategies

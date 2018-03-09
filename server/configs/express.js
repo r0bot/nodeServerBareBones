@@ -23,13 +23,16 @@ module.exports = (sessionStore) => {
   app.set('views', './server/views');
   const accessLogStream = fs.createWriteStream(`${LOGS_PATH}/access.log`, { flags: 'a' });
 
-  if (process.env.NODE_ENV === 'development') {
-    app.use(morgan('dev'));
-  } else {
-    app.use(morgan('combined', {
-      stream: accessLogStream,
-    }));
-  }
+  // if (process.env.NODE_ENV === 'development') {
+  //   app.use(morgan('dev'));
+  // } else {
+  //   app.use(morgan('combined', {
+  //     stream: accessLogStream,
+  //   }));
+  // }
+  app.use(morgan('combined', {
+    stream: accessLogStream,
+  }));
   // Setting static folder to serve
   app.use(express.static('./public'));
 

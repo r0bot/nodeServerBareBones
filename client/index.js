@@ -11,6 +11,7 @@ import HomePage from './pages/home-page';
 import ContactsPage from './pages/contacts-page';
 import RegisterPage from './pages/register-page';
 
+// TODO load inital state from server (eg isUserAuthenticated as it is using server sessions)
 const initialState = {};
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 const store = createStoreWithMiddleware(mainReducer, initialState);

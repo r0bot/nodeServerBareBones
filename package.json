@@ -38,6 +38,7 @@
     "express-session": "^1.15.6",
     "helmet": "^3.11.0",
     "lodash": "^4.17.5",
+    "log4js": "^2.5.3",
     "mocha": "^4.1.0",
     "moment": "^2.20.1",
     "mongoose": "^4.13.11",

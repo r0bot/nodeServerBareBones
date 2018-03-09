@@ -39,7 +39,9 @@ async function getById(userMail) {
   let result;
   try {
     const usersData = await users.findOne({ where: { id: userMail } });
-    result = usersData.map(user => userUtils.getPublicUser(user));
+    result = usersData.get({
+      plain: true
+    });
   } catch (err) {
     // TODO throw custom error
     error = err;
