@@ -53,18 +53,16 @@ function login(req, res, done) {
   // The plug function here will receive only error as argument.
   passport.authenticate('local-login')(req, res, (error) => {
     if (error) {
-      done(new Error(`Cannot login user. Reason: ${error.message}`));
-      return;
+      return done(new Error(`Cannot login user. Reason: ${error.message}`));
     }
     if (!req.user) {
-      done(new Error('Cannot login user. Reason: user not attached to request.'));
-      return;
+      return done(new Error('Cannot login user. Reason: user not attached to request.'));
     }
     const resultObject = {
       user: userUtils.getPublicUser(req.user),
     };
 
-    done(null, resultObject);
+    return done(null, resultObject);
   });
 }
 

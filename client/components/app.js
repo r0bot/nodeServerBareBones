@@ -8,6 +8,7 @@ import Footer from './footer';
 import HomePage from '../pages/home-page';
 import ContactsPage from '../pages/contacts-page';
 import RegisterPage from '../pages/register-page';
+import LoginPage from '../pages/login-page';
 import appBarTheme from '../theme/appBar.css';
 
 class App extends Component {
@@ -20,12 +21,14 @@ class App extends Component {
             <Navigation type='horizontal'>
               <Link to="/home"><Button icon='inbox' label='Home' flat /></Link>
               {!user.authenticated && <Link to="/register" ><Button icon='inbox' label='Register' flat /></Link>}
-              {user.authenticated && <Button icon='inbox' label='Signout' flat />}
+              {!user.authenticated && <Link to="/login" ><Button icon='inbox' label='Login' flat /></Link>}
+              {user.authenticated && <Button icon='inbox' label='Signout' flat onClick={this.props.signoutUser}/>}
             </Navigation>
           </AppBar>
           <Switch>
             <Route exact path="/home" component={HomePage} />
             <Route exact path="/register" component={RegisterPage} />
+            <Route exact path="/login" component={LoginPage} />
             <Route exact path="/contacts" component={ContactsPage} />
           </Switch>
           <Footer />

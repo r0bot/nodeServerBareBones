@@ -21,28 +21,6 @@ module.exports = (sessionStore) => {
 
   app.set('view engine', 'ejs');
   app.set('views', './server/views');
-
-  // Setting static folder to serve
-  app.use(express.static('./public'));
-
-  app.use(favicon('./favicon.ico'));
-  app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({ extended: true }));
-  app.use(cookieParser());
-
-  // Configure session management. Extend the options with store.
-  // If not provided (null/undefined) express will fallback to default MemStore.
-  app.use(session(_.assign(config.get('sessions'), { store: sessionStore })));
-
-  // Initialize passport
-  app.use(passport.initialize());
-  app.use(passport.session());
-
-  // Enable logger (morgan) and set where to save the logs
-  if (!fs.existsSync(LOGS_PATH)) {
-    fs.mkdirSync(LOGS_PATH);
-  }
-
   const accessLogStream = fs.createWriteStream(`${LOGS_PATH}/access.log`, { flags: 'a' });
 
   if (process.env.NODE_ENV === 'development') {
@@ -51,6 +29,26 @@ module.exports = (sessionStore) => {
     app.use(morgan('combined', {
       stream: accessLogStream,
     }));
+  }
+  // Setting static folder to serve
+  app.use(express.static('./public'));
+
+  app.use(favicon('./favicon.ico'));
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: true }));
+  //app.use(cookieParser());
+
+  // Configure session management. Extend the options with store.
+  // If not provided (null/undefined) express will fallback to default MemStore.
+  app.use(session(_.assign(config.get('sessions'), { store: sessionStore, resave: false, saveUninitialized: true })));
+
+  // Initialize passport
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+  // Enable logger (morgan) and set where to save the logs
+  if (!fs.existsSync(LOGS_PATH)) {
+    fs.mkdirSync(LOGS_PATH);
   }
 
   // Access-Control-Allow-Origin headers configuration
