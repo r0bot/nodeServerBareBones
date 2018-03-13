@@ -28,7 +28,7 @@ function createUser(req, res) {
  * @param res
  */
 async function getUserById({ params: { id } }, res) {
-  const [error, result] = await Users.getById(id);
+  const { error, result } = await Users.getById(id);
   if (error) {
     res.json(error);
   }

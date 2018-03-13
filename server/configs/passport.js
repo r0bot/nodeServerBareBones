@@ -10,7 +10,7 @@ module.exports = () => {
   });
 
   passport.deserializeUser(async (id, done) => {
-    const [error, result] = await users.getById(id);
+    const { error, result } = await users.getById(id);
     if (error) {
       return done(error);
     }
@@ -25,7 +25,7 @@ module.exports = () => {
   }, ((req, username, password, done) => {
       const userData = req.body;
       process.nextTick(async () => {
-        const [error, user] = await users.getByUsername(username);
+        const { error, user } = await users.getByUsername(username);
         if (error) {
           return done(error);
         }
@@ -37,7 +37,7 @@ module.exports = () => {
         userData.username = username;
         userData.provider = 'local';
 
-        const [createUserError, createdUser] = await users.createUser(userData);
+        const { createUserError, createdUser } = await users.createUser(userData);
         if (createUserError) {
           throw error;
         }
@@ -50,7 +50,7 @@ module.exports = () => {
     passwordField: 'password',
     passReqToCallback: true,
   }, (async (req, username, password, done) => {
-      const [error, user] = await users.validateUserPassword(username, password);
+      const { error, user } = await users.validateUserPassword(username, password);
       if (error) {
         return done({ message: error.message });
       }
