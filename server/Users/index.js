@@ -27,6 +27,7 @@ const userValidationSchema = Joi.object().keys({
   username: Joi.string().alphanum().min(3).max(30)
     .required(),
   password: Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/).required(),
+  provider: Joi.string().valid(['local']).required(),
   email: Joi.string().email().required()
 });
 
@@ -74,15 +75,17 @@ async function getByUsername(username) {
 async function createUser(userData) {
   let error;
   let result;
-  const { validationError, validatedUser } = Joi.validate(userData, userValidationSchema);
-  if (validationError) {
-    return { error: validationError, result: null };
+
+  const validationResult = Joi.validate(userData, userValidationSchema, { stripUnknown: true });
+  if (validationResult.error) {
+    return { error: validationResult.error, result: null };
   }
   try {
-    const hashedPassword = await bcrypt.hash(userData.password, config.get('bcrypt.saltRounds'));
+    const validatedUser = validationResult.value;
+    const hashedPassword = await bcrypt.hash(validatedUser.password, config.get('bcrypt.saltRounds'));
     // Overwrite the password with the hashed one
     validatedUser.password = hashedPassword;
-    const createdUser = await users.create(validatedUser);
+    const createdUser = await users.create(validationResult.value);
     result = userUtils.getPublicUser(createdUser.dataValues);
   } catch (err) {
     // TODO throw custom error
@@ -108,6 +111,7 @@ async function validateUserPassword(username, password) {
       error = new Error('Wrong password.');
       return { error };
     }
+    // TODO this exposes whole user to log fix it
     result = userData.dataValues;
   } catch (err) {
     // TODO throw custom error

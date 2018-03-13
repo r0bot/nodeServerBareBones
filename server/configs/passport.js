@@ -50,10 +50,10 @@ module.exports = () => {
     passwordField: 'password',
     passReqToCallback: true,
   }, (async (req, username, password, done) => {
-      const { error, user } = await users.validateUserPassword(username, password);
+      const { error, result } = await users.validateUserPassword(username, password);
       if (error) {
         return done({ message: error.message });
       }
-      return done(false, user, { message: 'Login succeeded!' });
+      return done(false, result, { message: 'Login succeeded!' });
     })));
 };
