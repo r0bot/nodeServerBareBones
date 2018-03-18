@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import { Link, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { AppBar, Navigation, Layout, Button, Panel } from 'react-toolbox';
+import { Layout, Panel } from 'react-toolbox';
 
 import * as actions from './../actions/auth';
+import Header from './header';
 import Footer from './footer';
 import HomePage from '../pages/home-page';
-import ContactsPage from '../pages/contacts-page';
 import RegisterPage from '../pages/register-page';
 import LoginPage from '../pages/login-page';
-import appBarTheme from '../theme/appBar.css';
 
 class App extends Component {
   render() {
@@ -17,19 +16,11 @@ class App extends Component {
     return (
       <Layout>
         <Panel>
-          <AppBar title='AIoT' leftIcon='menu' theme={appBarTheme}>
-            <Navigation type='horizontal'>
-              <Link to="/home"><Button icon='inbox' label='Home' flat /></Link>
-              {!user.authenticated && <Link to="/register" ><Button icon='inbox' label='Register' flat /></Link>}
-              {!user.authenticated && <Link to="/login" ><Button icon='inbox' label='Login' flat /></Link>}
-              {user.authenticated && <Button icon='inbox' label='Signout' flat onClick={this.props.signoutUser}/>}
-            </Navigation>
-          </AppBar>
+          <Header user="user" />
           <Switch>
             <Route exact path="/home" component={HomePage} />
             <Route exact path="/register" component={RegisterPage} />
             <Route exact path="/login" component={LoginPage} />
-            <Route exact path="/contacts" component={ContactsPage} />
           </Switch>
           <Footer />
         </Panel>
@@ -43,4 +34,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, actions)(App);
-
