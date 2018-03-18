@@ -4,7 +4,6 @@ import { Button } from 'react-toolbox/lib/button';
 import { reduxForm, Field } from 'redux-form';
 import { Link } from 'react-router-dom';
 
-
 const renderField = ({ input, meta, ...props }) => (
   <Input
     { ...input }
@@ -42,9 +41,7 @@ const validate = (props) => {
 };
 
 const SignupForm = props => {
-
   const { handleSubmit, submitting } = props;
-
 
   return (
     <div className="md-form">
@@ -61,13 +58,11 @@ const SignupForm = props => {
 
         <div className="form-bottom">
           <p>Already signed up?</p>
-          <Link to="/signin">Click here to sign in</Link>
+          <Link to="/login">Click here to sign in</Link>
         </div>
       </form>
     </div>
   );
 };
-
-
 
 export default reduxForm({ form: 'signup', validate })(SignupForm);

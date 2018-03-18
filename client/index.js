@@ -7,9 +7,6 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import mainReducer from './reducers';
 import App from './components/app';
-import HomePage from './pages/home-page';
-import ContactsPage from './pages/contacts-page';
-import RegisterPage from './pages/register-page';
 
 // TODO load inital state from server (eg isUserAuthenticated as it is using server sessions)
 const initialState = {};

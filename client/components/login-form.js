@@ -4,7 +4,6 @@ import { Button } from 'react-toolbox/lib/button';
 import { reduxForm, Field } from 'redux-form';
 import { Link } from 'react-router-dom';
 
-
 const renderField = ({ input, meta, ...props }) => (
   <Input
     { ...input }

@@ -1,5 +1,6 @@
 import {
-  AUTH_USER, SIGNUP_SUCCESS,
+  AUTH_USER,
+  SIGNUP_SUCCESS,
   UNAUTH_USER
 } from '../constants';
 
