@@ -9,14 +9,28 @@ import mainReducer from './reducers';
 import App from './components/app';
 
 // TODO load inital state from server (eg isUserAuthenticated as it is using server sessions)
-const initialState = {};
+function getLoggedInUser() {
+  const serialized = localStorage.getItem('user')
+  try {
+    return JSON.parse(serialized);
+  } catch (err) {
+    return null;
+  }
+}
+
+const initialState = {
+  user: {
+    authenticated: !!getLoggedInUser()
+  }
+};
+
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 const store = createStoreWithMiddleware(mainReducer, initialState);
 
 ReactDOM.render(
   <Provider store={store}>
     <Router>
-      <Route component={App}/>
+      <Route component={App} />
     </Router>
   </Provider>,
   document.getElementById('app')
