@@ -41,6 +41,6 @@ const config = {
 };
 
 // config.plugins.push(new webpack.optimize.UglifyJsPlugin());
-// config.devtool = 'source-map';
+config.devtool = 'source-map';
 
 module.exports = config;

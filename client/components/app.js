@@ -12,13 +12,12 @@ import LoginPage from '../pages/login-page';
 
 class App extends Component {
   render() {
-    const { user } = this.props;
     return (
       <Layout>
         <Panel>
-          <Header user="user" />
+          <Header user={this.props.user} signoutUser={this.props.signoutUser} />
           <Switch>
-            <Route exact path="/home" component={HomePage} />
+            <Route exact path="/" component={HomePage} />
             <Route exact path="/register" component={RegisterPage} />
             <Route exact path="/login" component={LoginPage} />
           </Switch>
