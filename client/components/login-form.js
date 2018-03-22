@@ -29,7 +29,7 @@ const LoginForm = (props) => {
 
   return (
     <div className="md-form">
-      <h1>Sign up</h1>
+      <h1>Sign in</h1>
       <form onSubmit={handleSubmit}>
 
         <Field name="username" component={renderField} type="text" label="Name" />
