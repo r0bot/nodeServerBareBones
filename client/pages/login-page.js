@@ -16,7 +16,6 @@ class LoginPage extends Component {
   }
 
   handleFormSubmit(userData) {
-    console.log(JSON.stringify(userData));
     this.props.signinUser(userData);
   }
 

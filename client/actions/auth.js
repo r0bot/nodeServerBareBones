@@ -18,7 +18,6 @@ export function authError(CONST, error) {
   };
 }
 
-
 export function signupUser(props) {
   return function (dispatch) {
     axios.post(`${API_URL}/auth/register`, props)
@@ -43,7 +42,6 @@ export function signinUser(props) {
       .catch(() => dispatch(authError(SIGNIN_FAILURE, "Username or password isn't correct")));
   };
 }
-
 
 export function signoutUser() {
   return (dispatch) => {

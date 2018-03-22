@@ -11,6 +11,7 @@ function Header(props) {
         <Link to="/"><Button icon='inbox' label='Home' flat /></Link>
         {!props.user.authenticated && <Link to="/register" ><Button icon='inbox' label='Register' flat /></Link>}
         {!props.user.authenticated && <Link to="/login" ><Button icon='inbox' label='Login' flat /></Link>}
+        {props.user.authenticated && <Link to="/dashboard" ><Button icon='inbox' flat label='Dashboard' /></Link>}
         {props.user.authenticated && <Button icon='inbox' label='Signout' flat onClick={props.signoutUser} />}
       </Navigation>
     </AppBar>

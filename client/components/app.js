@@ -9,6 +9,7 @@ import Footer from './footer';
 import HomePage from '../pages/home-page';
 import RegisterPage from '../pages/register-page';
 import LoginPage from '../pages/login-page';
+import DashboardPage from '../pages/dashboard-page';
 
 class App extends Component {
   render() {
@@ -20,6 +21,7 @@ class App extends Component {
             <Route exact path="/" component={HomePage} />
             <Route exact path="/register" component={RegisterPage} />
             <Route exact path="/login" component={LoginPage} />
+            <Route exact path="/dashboard" component={DashboardPage} />
           </Switch>
           <Footer />
         </Panel>
