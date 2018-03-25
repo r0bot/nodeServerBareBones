@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { AppBar, Navigation, Button } from 'react-toolbox';
 
@@ -17,5 +18,10 @@ function Header(props) {
     </AppBar>
   );
 }
+
+Header.propTypes = {
+  user: PropTypes.object,
+  signoutUser: PropTypes.func
+};
 
 export default Header;

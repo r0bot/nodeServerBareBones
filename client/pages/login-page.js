@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { Card } from 'react-toolbox';
@@ -32,6 +33,12 @@ class LoginPage extends Component {
     );
   }
 }
+
+LoginPage.propTypes = {
+  signinUser: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
+  from: PropTypes.string.isRequired
+};
 
 function mapStateToProps(state) {
   const location = state.location && state.location.state;
