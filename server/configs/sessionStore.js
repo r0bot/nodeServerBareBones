@@ -20,7 +20,7 @@ module.exports = function () {
   });
 
   const sessionStore = new SequelizeStore({
-    db: sequelize,
+    db: sequelize
   });
 
   sessionStore.sync();

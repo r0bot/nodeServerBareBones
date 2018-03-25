@@ -6,7 +6,11 @@
   "main": "server.js",
   "license": "Apache 2.0",
   "scripts": {
-    "start": "node server.js",
+    "build:client": "webpack --config ./client/webpack.config.js",
+    "dev:client": "npm run build:client -- -w",
+    "dev:server": "nodemon --ignore ./client --ignore ./public --ignore ./client/webpack.config.js ./server/server.js",
+    "dev": "npm-run-all --parallel dev:client dev:server",
+    "start": "npm run build:client && node ./server/server.js",
     "webpack": "webpack -wd"
   },
   "babel": {
@@ -17,14 +21,15 @@
     ]
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "babel-cli": "^6.26.0",
     "babel-loader": "^7.1.2",
+    "babel-plugin-transform-export-extensions": "^6.22.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
-    "bootstrap": "^3.3.7",
     "config": "^1.29.4",
     "connect-session-sequelize": "^5.2.0",
     "cookie-parser": "^1.4.3",
@@ -32,7 +37,9 @@
     "express": "^4.16.2",
     "express-session": "^1.15.6",
     "helmet": "^3.11.0",
+    "joi": "^13.1.2",
     "lodash": "^4.17.5",
+    "log4js": "^2.5.3",
     "mocha": "^4.1.0",
     "moment": "^2.20.1",
     "mongoose": "^4.13.11",
@@ -40,8 +47,22 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "passport.socketio": "^3.7.0",
+    "postcss": "^6.0.19",
+    "postcss-cssnext": "^3.1.0",
+    "postcss-each": "^0.10.0",
+    "postcss-import": "^11.1.0",
+    "postcss-mixins": "^6.2.0",
+    "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-redux": "^5.0.7",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "react-router-redux": "^5.0.0-alpha.9",
+    "react-toolbox": "^2.0.0-beta.12",
+    "redux": "^3.7.2",
+    "redux-form": "^7.2.3",
+    "redux-thunk": "^2.2.0",
     "sequelize": "^4.33.4",
     "serve-favicon": "^2.4.5",
     "socket.io": "^2.0.4",
@@ -50,8 +71,16 @@
     "webpack": "^3.11.0"
   },
   "devDependencies": {
+    "babel-core": "6.23.0",
+    "babel-preset-stage-2": "6.24.1",
+    "css-loader": "^0.28.10",
     "eslint": "^4.18.1",
     "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.8.0"
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-react": "^7.7.0",
+    "nodemon": "^1.15.1",
+    "npm-run-all": "^4.1.2",
+    "postcss-loader": "^2.1.1",
+    "style-loader": "^0.20.2"
   }
 }

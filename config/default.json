@@ -6,6 +6,9 @@
       "dialect": "mysql"
     }
   },
+  "bcrypt":{
+    "saltRounds":10
+  },
   "sessionStore": {
     "username":"user",
     "password":"password",
