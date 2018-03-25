@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Layout, Panel } from 'react-toolbox';
+
 // import { Redirect } from 'react-router-dom';
 // import { Card } from 'react-toolbox';
 import { WidgetList } from '../components/widgets';
@@ -17,10 +19,12 @@ class DashboardPage extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Dashboard</h1>
-        <WidgetList widgets={this.props.widgets}></WidgetList>
-      </div>
+      <Layout>
+        <Panel>
+          <h1>Dashboard</h1>
+          <WidgetList widgets={this.props.widgets}></WidgetList>
+        </Panel>
+      </Layout>
     );
   }
 }
