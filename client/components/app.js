@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Layout, Panel } from 'react-toolbox';
 
 import * as actions from './../actions/auth';
+import PrivateRoute from '../components/private-route';
 import Header from './header';
 import Footer from './footer';
 import HomePage from '../pages/home-page';
@@ -21,7 +23,7 @@ class App extends Component {
             <Route exact path="/" component={HomePage} />
             <Route exact path="/register" component={RegisterPage} />
             <Route exact path="/login" component={LoginPage} />
-            <Route exact path="/dashboard" component={DashboardPage} />
+            <PrivateRoute exact path="/dashboard" component={DashboardPage} />
           </Switch>
           <Footer />
         </Panel>
@@ -29,6 +31,11 @@ class App extends Component {
     );
   }
 }
+
+App.propTypes = {
+  user: PropTypes.object,
+  signoutUser: PropTypes.func
+};
 
 function mapStateToProps(state) {
   return { user: state.user || {} };

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 // import { Redirect } from 'react-router-dom';
 // import { Card } from 'react-toolbox';
-import { ToggleWidget } from '../components/widgets';
+import { WidgetList } from '../components/widgets';
 
 import * as actions from './../actions/dashboard-actions';
 
@@ -18,25 +19,19 @@ class DashboardPage extends Component {
     return (
       <div>
         <h1>Dashboard</h1>
-        {
-          this.props.widgets &&
-          this.props.widgets.map((w, i) => {
-            return (<ToggleWidget key={i} test="abbab"></ToggleWidget>);
-          })
-        }
+        <WidgetList widgets={this.props.widgets}></WidgetList>
       </div>
     );
   }
 }
 
+DashboardPage.propTypes = {
+  widgets: PropTypes.array,
+  getWidgets: PropTypes.func
+};
+
 function mapStateToProps(state = {}) {
   return state.dashboard;
 }
-
-// function mapDispatchToProps(dispatch, ownProps) {
-//   getWidgets: () => {
-//     dispatch(setVisibilityFilter(ownProps.filter))
-//   }
-// }
 
 export default connect(mapStateToProps, actions)(DashboardPage);

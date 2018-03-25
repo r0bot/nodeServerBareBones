@@ -1,6 +1,7 @@
 // TODO: implement query
 function getWidgets(/* query */) {
-  return Promise.resolve([{ mock: true }]);
+  return Promise.resolve([]);
+  // return Promise.resolve([{ mock: true }, {}]);
 }
 
 const dashboardService = {
