@@ -7,14 +7,18 @@ import { Layout, Panel } from 'react-toolbox';
 // import { Card } from 'react-toolbox';
 import { WidgetList } from '../components/widgets';
 
-import * as actions from './../actions/dashboard-actions';
+import * as actions from '../actions/dashboard-actions';
 
 // TODO: add validation with prop types
 class DashboardPage extends Component {
   constructor(props) {
     super(props);
-    // this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.props.getWidgets();
+    this.onWidgetClick = this.onWidgetClick.bind(this);
+  }
+
+  onWidgetClick() {
+    console.log('widget click');
   }
 
   render() {
@@ -22,7 +26,7 @@ class DashboardPage extends Component {
       <Layout>
         <Panel>
           <h1>Dashboard</h1>
-          <WidgetList widgets={this.props.widgets}></WidgetList>
+          <WidgetList widgets={this.props.widgets} onWidgetClick={this.onWidgetClick} />
         </Panel>
       </Layout>
     );

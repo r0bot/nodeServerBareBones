@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, CardTitle, Switch } from 'react-toolbox';
+import { Card, Switch } from 'react-toolbox';
 import widgetCardTheme from '../../theme/widgetCard.css';
 
 const ToggleWidget = (props) => {
   return (
     <Card theme={widgetCardTheme}>
-      <CardTitle title={props.title} />
       <Switch
+        label={props.title}
         checked={props.enabled}
       />
     </Card>
@@ -17,7 +17,7 @@ const ToggleWidget = (props) => {
 ToggleWidget.propTypes = {
   _id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  enabled: PropTypes.bool
+  enabled: PropTypes.bool.isRequired
 };
 
 export default ToggleWidget;
