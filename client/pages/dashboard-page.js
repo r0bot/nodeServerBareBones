@@ -9,11 +9,14 @@ import { WidgetList } from '../components/widgets';
 
 import * as actions from '../actions/dashboard-actions';
 
-// TODO: add validation with prop types
 class DashboardPage extends Component {
   constructor(props) {
     super(props);
-    this.props.getWidgets();
+
+    if (!this.props.widgets) { // their data should be live
+      this.props.getWidgets();
+    }
+
     this.onWidgetClick = this.onWidgetClick.bind(this);
   }
 

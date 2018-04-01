@@ -3,4 +3,4 @@ export const WidgetType = {
   Graph: 'graph'
 };
 
-export const SomeOther = 4; // TODO: remove. just to make eslint shut up
+export const MaxPlottedPoints = 200;

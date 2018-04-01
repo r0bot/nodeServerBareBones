@@ -1,8 +1,10 @@
-const widgetsMock = [
-  { _id: '1', type: 'toggle', title: 'toggle 1', enabled: true },
-  { _id: '2', type: 'toggle', title: 'toggle 2', enabled: true },
-  { _id: '3', type: 'toggle', title: 'toggle 3', enabled: false },
-  { _id: '4', type: 'graph', title: 'graph', enabled: false }
+const widgetsMock = [ // TODO: remove
+  { id: '1', type: 'toggle', title: 'toggle 1', enabled: true },
+  { id: '2', type: 'toggle', title: 'toggle 2', enabled: true },
+  { id: '3', type: 'toggle', title: 'toggle 3', enabled: false },
+  { id: '4', type: 'graph', title: 'graph', dataOptions: { valuesKey: 'value', xKey: 'timestamp', yKey: 'y' }, enabled: false },
+  { id: '5', type: 'graph', title: 'graph', dataOptions: { valuesKey: 'value', xKey: 'timestamp', yKey: 'y' }, enabled: false },
+  { id: '6', type: 'graph', title: 'graph', dataOptions: { valuesKey: 'value', xKey: 'timestamp', yKey: 'y' }, enabled: false }
 ];
 
 // TODO: implement query

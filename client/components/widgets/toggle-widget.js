@@ -15,7 +15,7 @@ const ToggleWidget = (props) => {
 };
 
 ToggleWidget.propTypes = {
-  _id: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   enabled: PropTypes.bool.isRequired
 };

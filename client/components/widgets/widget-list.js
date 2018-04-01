@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import renderWidget from './widget-renderer';
+import Widget from './widget';
 
 const WidgetList = ({ widgets }) => {
   const hasWidgets = widgets && widgets.length;
@@ -9,7 +9,7 @@ const WidgetList = ({ widgets }) => {
   return (
     <div>
       {hasWidgets && widgets.map((w) => {
-        return (<span key={w._id}>{renderWidget(w)}</span>);
+        return (<span key={w.id}>{<Widget {...w} />}</span>);
       })}
       {!hasWidgets && (<div><span>No widgets yet</span></div>)}
     </div>
