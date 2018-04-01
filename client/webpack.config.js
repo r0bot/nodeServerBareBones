@@ -18,7 +18,8 @@ const config = {
             'stage-2',
             'react'
           ]
-        }
+        },
+        exclude: /node_modules/
       },
       {
         test: /\.css$/,
