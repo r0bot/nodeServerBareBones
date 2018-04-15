@@ -25,7 +25,7 @@ export default class Widget extends Component {
     return dataSoFar.concat(dataToAdd).slice(truncateCount);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     dataStreamService.connectToDataStream(this.props.id)
       .subscribe((data) => {
         if (!this.state.hasLoaded) {
